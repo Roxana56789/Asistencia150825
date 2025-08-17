@@ -23,6 +23,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.esfe.Asistencia.Modelos.Grupo;
 import com.esfe.Asistencia.Servicios.Interfaces.IGrupoService;
 
+import jakarta.validation.Valid;
+
 
 @Controller
 @RequestMapping("/grupos")
@@ -56,6 +58,7 @@ public class GrupoController {
     // ----------- CREAR --------------
     @GetMapping("/create")
     public String create(Model model) {
+        
         model.addAttribute("grupo", new Grupo());
         model.addAttribute("action", "create");
         return "grupo/mant";
@@ -90,7 +93,7 @@ public class GrupoController {
 
     // ----------- PROCESAR POST según action --------------
     @PostMapping("/create")
-    public String saveNuevo(@ModelAttribute Grupo grupo, BindingResult result,
+    public String saveNuevo(  @Valid @ModelAttribute Grupo grupo, BindingResult result,
                             RedirectAttributes redirect, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("action", "create");
@@ -102,7 +105,7 @@ public class GrupoController {
     }
 
     @PostMapping("/edit")
-    public String saveEditado(@ModelAttribute Grupo grupo, BindingResult result,
+    public String saveEditado(@Valid @ModelAttribute Grupo grupo, BindingResult result,
                               RedirectAttributes redirect, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("action", "edit");
